@@ -1,0 +1,16 @@
+<%init>
+return unless $ARGSRef->{'RTLinkableAction'};
+my $attribute = $$TicketObj->FirstAttribute( $ARGSRef->{'RTLinkableAction'} );
+
+use Storable qw /nstore retrieve/;
+local $Storable::Deparse = 1;
+local $Storable::Eval    = 1;
+
+my $sub = $attribute->Content;
+&$sub(\$TicketObj)
+</%init>
+<%args>
+$TicketObj
+$ARGSRef
+$Actions
+</%args>
