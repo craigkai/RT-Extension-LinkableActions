@@ -11,7 +11,7 @@ if ($@) {
     $action = "Linked action ".$attribute->Name." failed, see logs for more information.";
 }
 else {
-    $action = "Linked action completed";
+    $action = $retval;
 }
 push @{$Actions}, $action;
 </%init>

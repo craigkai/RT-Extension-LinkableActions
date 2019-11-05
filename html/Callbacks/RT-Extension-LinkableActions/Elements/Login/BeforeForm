@@ -16,7 +16,7 @@ if ($@) {
     $action = "Linked action failed, see logs for more information";
 }
 else {
-    $action = "Linked action completed";
+    $action = $retval;
 }
 </%init>
 <%args>
