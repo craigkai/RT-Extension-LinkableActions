@@ -2,10 +2,6 @@ use strict;
 use warnings;
 package RT::Extension::LinkableActions;
 
-use B::Deparse;
-use Data::Dumper;
-$Data::Dumper::Deparse = 1;
-
 our $VERSION = '0.01';
 
 sub NewLinkAction {
@@ -145,29 +141,18 @@ Where the "Name" key will be the name displayed as the text content of the resul
 
 =cut
 
-=head1 AUTHOR
+=head2 Todo
 
-Best Practical Solutions, LLC E<lt>modules@bestpractical.comE<gt>
+* Add NoAuth support
 
-=for html <p>All bugs should be reported via email to <a
-href="mailto:bug-RT-Extension-LinkableActions@rt.cpan.org">bug-RT-Extension-LinkableActions@rt.cpan.org</a>
-or via the web at <a
-href="http://rt.cpan.org/Public/Dist/Display.html?Name=RT-Extension-LinkableActions">rt.cpan.org</a>.</p>
+* Clean-up template method call
 
-=for text
-    All bugs should be reported via email to
-        bug-RT-Extension-LinkableActions@rt.cpan.org
-    or via the web at
-        http://rt.cpan.org/Public/Dist/Display.html?Name=RT-Extension-LinkableActions
-
-=head1 LICENSE AND COPYRIGHT
-
-This software is Copyright (c) 2019 by Best Practical LLC
-
-This is free software, licensed under:
-
-  The GNU General Public License, Version 2, June 1991
+* Add a `CompileCheck` call on template update to check if code is valid in $sub.
 
 =cut
+
+=head1 AUTHOR
+
+Craig Kaiser
 
 1;

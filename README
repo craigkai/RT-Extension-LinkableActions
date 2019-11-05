@@ -50,17 +50,16 @@ CONFIGURATION
     Where the "Name" key will be the name displayed as the text content of
     the resulting anchor tag.
 
+  Todo
+    * Add NoAuth support
+
+    * Clean-up template method call
+
+    * Add a `CompileCheck` call on template update to check if code is valid
+    in $sub.
+
 AUTHOR
-    Best Practical Solutions, LLC <modules@bestpractical.com>
+    Craig Kaiser
 
-    All bugs should be reported via email to
-        bug-RT-Extension-LinkableActions@rt.cpan.org
-    or via the web at
-        http://rt.cpan.org/Public/Dist/Display.html?Name=RT-Extension-LinkableActions
-LICENSE AND COPYRIGHT
-    This software is Copyright (c) 2019 by Best Practical LLC
-
-    This is free software, licensed under:
-
-      The GNU General Public License, Version 2, June 1991
+    1;
 

@@ -1,7 +1,7 @@
 ---
 abstract: 'RT-Extension-LinkableActions Extension'
 author:
-  - 'Best Practical Solutions, LLC <modules@bestpractical.com>'
+  - 'Craig Kaiser'
 build_requires:
   ExtUtils::MakeMaker: 6.59
 configure_requires:
@@ -21,7 +21,6 @@ no_index:
 requires:
   perl: 5.10.1
 resources:
-  license: http://opensource.org/licenses/gpl-license.php
   repository: https://github.com/bestpractical/rt-extension-linkableactions
 version: '0.01'
 x_module_install_rtx_version: '0.40'
