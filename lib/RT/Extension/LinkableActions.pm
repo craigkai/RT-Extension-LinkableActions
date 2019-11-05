@@ -137,7 +137,7 @@ a string of the code you want executed. The example template below has a linked 
             Ticket        => $Ticket,
             Transaction   => $Transaction,
             Sub           => $sub,
-            Name          => 'Issue is resolved
+            Name          => 'Issue is resolved'
         );
     }
 

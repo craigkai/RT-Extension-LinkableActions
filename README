@@ -43,7 +43,7 @@ CONFIGURATION
                 Ticket        => $Ticket,
                 Transaction   => $Transaction,
                 Sub           => $sub,
-                Name          => 'Issue is resolved
+                Name          => 'Issue is resolved'
             );
         }
 
