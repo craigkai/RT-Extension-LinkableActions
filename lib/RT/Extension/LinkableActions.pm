@@ -134,10 +134,10 @@ a string of the code you want executed. The example template below has a linked 
             RT::Logger->error($msg) unless $ret;
         };
         $OUT = RT::Extension::LinkableActions->NewLinkAction(
-            Ticket => $Ticket,
-            Transaction => $Transaction,
-            Sub => $sub,
-            Name => 'Click ME'
+            Ticket        => $Ticket,
+            Transaction   => $Transaction,
+            Sub           => $sub,
+            Name          => 'Issue is resolved
         );
     }
 

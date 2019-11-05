@@ -40,10 +40,10 @@ CONFIGURATION
                 RT::Logger->error($msg) unless $ret;
             };
             $OUT = RT::Extension::LinkableActions->NewLinkAction(
-                Ticket => $Ticket,
-                Transaction => $Transaction,
-                Sub => $sub,
-                Name => 'Click ME'
+                Ticket        => $Ticket,
+                Transaction   => $Transaction,
+                Sub           => $sub,
+                Name          => 'Issue is resolved
             );
         }
 
