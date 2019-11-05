@@ -155,4 +155,6 @@ Where the "Name" key will be the name displayed as the text content of the resul
 
 Craig Kaiser
 
+=cut
+
 1;
