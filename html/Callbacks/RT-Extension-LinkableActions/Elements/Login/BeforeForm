@@ -1,5 +1,18 @@
 <%init>
+return;
+#return unless $ARGSRef->{'RTLinkableAction'} && $id;
+#my $ticket = RT::Ticket->new( RT->SystemUser );
+# $ticket->Load($id);
+#my $attribute = $ticket->FirstAttribute( $ARGS{'RTLinkableAction'} );
 
+#my $code = $attribute->Content;
+
+#my $retval = eval $code;
+#my $action;
+#if ($@) {
+#    RT::Logger->error("Linked action ".$attribute->Name. " failed: ".$@);
+#}
 </%init>
 <%args>
+$id   => undef
 </%args>

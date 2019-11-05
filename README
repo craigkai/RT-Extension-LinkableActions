@@ -26,7 +26,29 @@ INSTALLATION
 
 CONFIGURATION
     This extension uses a custom method call from templates to generate a
-    link that will perform a action on click.
+    link that will perform a action on click. This method needs to be
+    provided with the $Ticket and $Transaction objects from the template.
+    You then pass a string of the code you want executed. The example
+    template below has a linked action that will resolve the ticket:
+
+        Subject: {$Ticket->Subject}
+        Content-Type: text/html
+
+        {
+            my $sub = q {
+                my ($ret, $msg) = $Ticket->SetStatus('resolved');
+                RT::Logger->error($msg) unless $ret;
+            };
+            $OUT = RT::Extension::LinkableActions->NewLinkAction(
+                Ticket => $Ticket,
+                Transaction => $Transaction,
+                Sub => $sub,
+                Name => 'Click ME'
+            );
+        }
+
+    Where the "Name" key will be the name displayed as the text content of
+    the resulting anchor tag.
 
 AUTHOR
     Best Practical Solutions, LLC <modules@bestpractical.com>

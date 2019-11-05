@@ -17,13 +17,23 @@ sub NewLinkAction {
         Sub         => undef,
         @_
     );
-    local $Storable::Deparse = 1; 
+
+    my $code = q[
+        my $Ticket       = RT::Ticket->new( $session{'CurrentUser'} );
+        my $Transaction  = RT::Transaction->new( $session{'CurrentUser'} );
+
+        $Ticket->Load(].$args{'Ticket'}->Id.');'
+        .q[
+        $Transaction->Load(].$args{'Transaction'}->Id.q[);
+
+    ];
+    $code .= $args{'Sub'};
 
     my $attribute_key = 'RTLinkableAction-'.$args{'Ticket'}->Id ."-".$args{'Transaction'}->Id;
     if ( $args{'Ticket'}->FirstAttribute( $attribute_key ) ) {
         my ($ret, $msg) = $args{'Ticket'}->SetAttribute(
             Name     => $attribute_key,
-            Content  => $args{'Sub'}
+            Content  => $code
         );
         if ( $ret ) {
             RT::Logger->debug("Updating existing linked action attribute for $args{Name}");
@@ -35,7 +45,7 @@ sub NewLinkAction {
     else {
         my ($ret, $msg) = $args{'Ticket'}->AddAttribute(
             Name    => $attribute_key,
-            Content => $args{'Sub'}
+            Content => $code
         );
         if ( $ret ) {
             RT::Logger->debug("Creating linked action attribute for $args{Name}");
@@ -55,6 +65,22 @@ sub NewLinkAction {
     return $link;
 }
 
+sub CompileCheck {
+    my $self = shift;
+    my $code = shift;
+
+    return return (0, $self->loc("Provide CODE arg for compile check")) if !defined($code);
+
+    do {
+        no strict 'vars';
+        eval "sub { $code \n }";
+    };
+    if ( $@ ) {
+        my $error = $@;
+        return (0, $self->loc("Couldn't compile linked action codeblock '[_2]': [_3]", $code, $error));
+    }
+    return (1, 'Success');
+}
 =head1 NAME
 
 RT-Extension-LinkableActions - Create clickable links in emails that when clicked perform an action in RT.
@@ -96,6 +122,26 @@ Add this line:
 =head1 CONFIGURATION
 
 This extension uses a custom method call from templates to generate a link that will perform a action on click.
+This method needs to be provided with the C<$Ticket> and C<$Transaction> objects from the template. You then pass
+a string of the code you want executed. The example template below has a linked action that will resolve the ticket:
+
+    Subject: {$Ticket->Subject}
+    Content-Type: text/html
+
+    {
+        my $sub = q {
+            my ($ret, $msg) = $Ticket->SetStatus('resolved');
+            RT::Logger->error($msg) unless $ret;
+        };
+        $OUT = RT::Extension::LinkableActions->NewLinkAction(
+            Ticket => $Ticket,
+            Transaction => $Transaction,
+            Sub => $sub,
+            Name => 'Click ME'
+        );
+    }
+
+Where the "Name" key will be the name displayed as the text content of the resulting anchor tag.
 
 =cut
 

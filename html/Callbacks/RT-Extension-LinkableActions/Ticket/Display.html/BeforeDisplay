@@ -2,12 +2,18 @@
 return unless $ARGSRef->{'RTLinkableAction'};
 my $attribute = $$TicketObj->FirstAttribute( $ARGSRef->{'RTLinkableAction'} );
 
-use Storable qw /nstore retrieve/;
-local $Storable::Deparse = 1;
-local $Storable::Eval    = 1;
+my $code = $attribute->Content;
 
-my $sub = $attribute->Content;
-&$sub(\$TicketObj)
+my $retval = eval $code;
+my $action;
+if ($@) {
+    RT::Logger->error("Linked action ".$attribute->Name. " failed: ".$@);
+    $action = "Linked action ".$attribute->Name." failed, see logs for more information.";
+}
+else {
+    $action = "Linked action completed";
+}
+push @{$Actions}, $action;
 </%init>
 <%args>
 $TicketObj
