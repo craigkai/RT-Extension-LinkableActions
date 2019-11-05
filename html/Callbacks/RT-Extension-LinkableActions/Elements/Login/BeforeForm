@@ -1,17 +1,23 @@
+<& /Elements/ListActions,
+    actions     => $action
+&>
 <%init>
-return;
-#return unless $ARGSRef->{'RTLinkableAction'} && $id;
-#my $ticket = RT::Ticket->new( RT->SystemUser );
-# $ticket->Load($id);
-#my $attribute = $ticket->FirstAttribute( $ARGS{'RTLinkableAction'} );
+return unless $ARGS{'RTLinkableAction'} && $id;
+my $ticket = RT::Ticket->new( RT->SystemUser );
+$ticket->Load($id);
+my $attribute = $ticket->FirstAttribute( $ARGS{'RTLinkableAction'} );
 
-#my $code = $attribute->Content;
+my $code = $attribute->Content;
 
-#my $retval = eval $code;
-#my $action;
-#if ($@) {
-#    RT::Logger->error("Linked action ".$attribute->Name. " failed: ".$@);
-#}
+my $retval = eval $code;
+my $action;
+if ($@) {
+    RT::Logger->error("Linked action ".$attribute->Name. " failed: ".$@);
+    $action = "Linked action failed, see logs for more information";
+}
+else {
+    $action = "Linked action completed";
+}
 </%init>
 <%args>
 $id   => undef

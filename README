@@ -43,16 +43,18 @@ CONFIGURATION
                 Ticket        => $Ticket,
                 Transaction   => $Transaction,
                 Sub           => $sub,
-                Name          => 'Issue is resolved'
+                Name          => 'Issue is resolved',
+                NoAuth        => 0
             );
         }
 
     Where the "Name" key will be the name displayed as the text content of
     the resulting anchor tag.
 
-  Todo
-    * Add NoAuth support
+    **WARNING** Adding the `NoAuth` flag means that anyone can execute
+    action as the RT->SystemUser.
 
+  Todo
     * Clean-up template method call
 
     * Add a `CompileCheck` call on template update to check if code is valid
@@ -60,6 +62,4 @@ CONFIGURATION
 
 AUTHOR
     Craig Kaiser
-
-    1;
 

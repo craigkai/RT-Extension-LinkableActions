@@ -14,7 +14,15 @@ sub NewLinkAction {
         @_
     );
 
-    my $code = q[
+    my $code = $args{'NoAuth'} ? q[
+        my $Ticket       = RT::Ticket->new( RT->SystemUser );
+        my $Transaction  = RT::Transaction->new( RT->SystemUser );
+
+        $Ticket->Load(].$args{'Ticket'}->Id.');'
+        .q[
+        $Transaction->Load(].$args{'Transaction'}->Id.q[);
+
+    ] : q[
         my $Ticket       = RT::Ticket->new( $session{'CurrentUser'} );
         my $Transaction  = RT::Transaction->new( $session{'CurrentUser'} );
 
@@ -77,6 +85,7 @@ sub CompileCheck {
     }
     return (1, 'Success');
 }
+
 =head1 NAME
 
 RT-Extension-LinkableActions - Create clickable links in emails that when clicked perform an action in RT.
@@ -133,17 +142,17 @@ a string of the code you want executed. The example template below has a linked 
             Ticket        => $Ticket,
             Transaction   => $Transaction,
             Sub           => $sub,
-            Name          => 'Issue is resolved'
+            Name          => 'Issue is resolved',
+            NoAuth        => 0
         );
     }
 
 Where the "Name" key will be the name displayed as the text content of the resulting anchor tag.
 
+**WARNING** Adding the `NoAuth` flag means that anyone can execute action as the RT->SystemUser.
 =cut
 
 =head2 Todo
-
-* Add NoAuth support
 
 * Clean-up template method call
 
