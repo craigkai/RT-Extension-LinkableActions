@@ -33,7 +33,9 @@ sub NewLinkAction {
     ];
     $code .= $args{'Sub'};
 
-    my $attribute_key = 'RTLinkableAction-'.$args{'Ticket'}->Id ."-".$args{'Transaction'}->Id;
+    my $token = substr(Digest::MD5::md5_hex(time . {} . rand()),0,16);
+
+    my $attribute_key = 'RTLinkableAction-'.$args{'Ticket'}->Id ."-".$args{'Transaction'}->Id ."-$token";
     if ( $args{'Ticket'}->FirstAttribute( $attribute_key ) ) {
         my ($ret, $msg) = $args{'Ticket'}->SetAttribute(
             Name     => $attribute_key,
