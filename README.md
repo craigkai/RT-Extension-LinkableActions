@@ -1,0 +1,79 @@
+#### NAME
+
+  RT-Extension-LinkableActions - Create clickable links in emails that
+  when clicked perform an action in RT.
+
+#### DESCRIPTION
+
+
+  Like RT::Scrips that fire on click.
+
+  ![Demo](./static/images/linkable-actions-demo.gif)
+
+#### RT VERSION
+
+  Works with RT 5.0
+
+#### INSTALLATION
+
+  perl Makefile.PL
+
+  make
+
+  make install
+
+    May need root permissions
+
+##### Edit your /opt/rt4/etc/RT_SiteConfig.pm
+
+  Add this line:
+
+      Plugin('RT::Extension::LinkableActions');
+
+##### Clear your mason cache
+
+  rm -rf /opt/rt4/var/mason_data/obj
+
+##### Restart your webserver
+
+#### CONFIGURATION
+
+  This extension uses a custom method call from templates to generate a
+  link that will perform a action on click. This method needs to be
+  provided with the $Ticket and $Transaction objects from the template.
+  You then pass a string of the code you want executed. The example
+  template below has a linked action that will resolve the ticket:
+
+      Subject: {$Ticket->Subject}
+      Content-Type: text/html
+
+      {
+          my $sub = q {
+              my ($ret, $msg) = $Ticket->SetStatus('resolved');
+              RT::Logger->error($msg) unless $ret;
+          };
+          $OUT = RT::Extension::LinkableActions->NewLinkAction(
+              Ticket        => $Ticket,
+              Transaction   => $Transaction,
+              Sub           => $sub,
+              Name          => 'Issue is resolved',
+              NoAuth        => 0
+          );
+      }
+
+  Where the "Name" key will be the name displayed as the text content of
+  the resulting anchor tag.
+
+  **WARNING** Adding the `NoAuth` flag means that anyone can execute
+  action as the RT->SystemUser.
+
+#### Todo
+
+  * Clean-up template method call
+
+  * Add a `CompileCheck` call on template update to check if code is valid
+  in $sub.
+
+#### AUTHOR
+
+  Craig Kaiser
