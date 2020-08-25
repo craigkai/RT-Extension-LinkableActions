@@ -96,9 +96,17 @@ RT-Extension-LinkableActions - Create clickable links in emails that when clicke
 
 Like RT::Scrips that fire on click.
 
+![Demo](https://files.ceal.dev/linkable-actions-demo.gif)
+
+=begin html
+
+<img src="./static/images/linkable-actions-demo.gif" alt="Demo"></img>
+
+=end html
+
 =head1 RT VERSION
 
-Works with RT 4.4
+Works with RT 5.0
 
 =head1 INSTALLATION
 
