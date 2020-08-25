@@ -5,8 +5,10 @@ NAME
 DESCRIPTION
     Like RT::Scrips that fire on click.
 
+    ![Demo](https://files.ceal.dev/linkable-actions-demo.gif)
+
 RT VERSION
-    Works with RT 4.4
+    Works with RT 5.0
 
 INSTALLATION
     perl Makefile.PL
